@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessible Registration</title>
+</head>
+<body>
+  <main>
+    <h1>Create Your Account</h1>
+
+    <form id="registrationForm" aria-labelledby="form-title" novalidate>
+      <fieldset>
+        <legend id="form-title">User Information</legend>
+
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" aria-required="true" />
+        </div>
+
+        <br>
+
+        <div>
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" aria-required="true" />
+        </div>
+
+        <br>
+
+        <div>
+          <label for="password">Create Password:</label>
+          <input type="password" id="password" name="password" aria-required="true" minlength="6" />
+        </div>
+
+        <br>
+
+        <div>
+          <label for="confirmPassword">Confirm Password:</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" aria-required="true" />
+        </div>
+
+        <br>
+
+        <button type="submit">Sign Up</button>
+      </fieldset>
+    </form>
+
+    <section id="error-message" style="color:rgb(23, 22, 22); margin-top:1em;"></section>
+  </main>
+
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", function (e) {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const errorContainer = document.getElementById("error-message");
+
+      let message = "";
+
+      if (!username) {
+        message = "Username is required.";
+      } else if (!email.includes("@") || !email.includes(".")) {
+        message = "Please enter a valid email address.";
+      } else if (password.length < 6) {
+        message = "Password must be at least 6 characters.";
+      } else if (password !== confirmPassword) {
+        message = "Passwords do not match.";
+      }
+
+      if (message) {
+        e.preventDefault(); // Prevent form submission
+        errorContainer.textContent = message;
+      } else {
+        errorContainer.textContent = "";
+      }
+    });
+  </script>
+</body>
+</html>
